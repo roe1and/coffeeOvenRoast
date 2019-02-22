@@ -1,70 +1,95 @@
 
-<ion-content padding>
-    <ion-grid>
-      <ion-row class="ion-activatable">
-        <ion-col>
-          <ion-card 
-            (click)="!disable_p1_click && startTimer1(11)" 
-            [ngClass]="{
-            'card1-done': p1_done
-            }">
-            <ion-ripple-effect></ion-ripple-effect>
-            <ion-card-header [hidden]="hide_p1">
-              <ion-card-subtitle>Phase 1</ion-card-subtitle>
-              <ion-card-title>{{p1}}</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              <ion-progress-bar [hidden]="hide_p1" value="{{percent1}}"></ion-progress-bar>
-              <div [hidden]="!hide_p1" class="done"><p>Done</p></div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card (click)="startTimer2(11)" [ngClass]="{
-            'card2-done': p2_done
-            }">
-            <ion-card-header>
-              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
-              <ion-card-title>{{p2}}</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              <ion-progress-bar value="{{percent2}}"></ion-progress-bar>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card (click)="startTimer3(3)">
-            <ion-card-header>
-              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
-              <ion-card-title>{{p3}}</ion-card-title>
-            </ion-card-header>
-            
-            <ion-card-content>
-              <ion-progress-bar value="{{percent3}}"></ion-progress-bar>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card (click)="startTimer4(3)">
-            <ion-card-header>
-              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
-              <ion-card-title>{{p4}}</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              <ion-progress-bar value="{{percent4}}"></ion-progress-bar>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+<ion-content class="content" padding>
+  <ion-fab *ngIf='show_reset' vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="reset()">
+      <ion-icon name="refresh-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-grid>
+    <ion-row class="ion-activatable">
+      <ion-col>
+        <ion-card 
+          (click)="!disable_click_p1 && startTimer1(11)" 
+          [ngClass]="{
+          'card1-done': p1_done
+          }">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-card-header [hidden]="hide_p1">
+            <ion-card-subtitle>Phase 1</ion-card-subtitle>
+            <ion-card-title>{{p1}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-progress-bar [hidden]="hide_p1" value="{{percent1}}"></ion-progress-bar>
+            <div [hidden]="!hide_p1" class="done"><p>Done</p></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-activatable">
+      <ion-col>
+        <ion-card 
+          (click)="!disable_click_p2 && startTimer2(7)" 
+          [ngClass]="{
+          'card2-done': p2_done
+          }">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-card-header [hidden]="hide_p2">
+            <ion-card-subtitle>Phase 2</ion-card-subtitle>
+            <ion-card-title>{{p2}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-progress-bar [hidden]="hide_p2" value="{{percent2}}"></ion-progress-bar>
+            <div [hidden]="!hide_p2" class="done"><p>Done</p></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-activatable">
+      <ion-col>
+        <ion-card 
+          (click)="!disable_click_p3 && startTimer3(11)" 
+          [ngClass]="{
+          'card3-done': p3_done
+          }">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-card-header [hidden]="hide_p3">
+            <ion-card-subtitle>Phase 3</ion-card-subtitle>
+            <ion-card-title>{{p3}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-progress-bar [hidden]="hide_p3" value="{{percent3}}"></ion-progress-bar>
+            <div [hidden]="!hide_p3" class="done"><p>Done</p></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-activatable">
+      <ion-col>
+        <ion-card 
+          (click)="!disable_click_p4 && startTimer4(11)" 
+          [ngClass]="{
+          'card4-done': p4_done
+          }">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-card-header [hidden]="hide_p4">
+            <ion-card-subtitle>Phase 4</ion-card-subtitle>
+            <ion-card-title>{{p4}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-progress-bar [hidden]="hide_p4" value="{{percent4}}"></ion-progress-bar>
+            <div [hidden]="!hide_p4" class="done"><p>Done</p></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 
 </ion-content>

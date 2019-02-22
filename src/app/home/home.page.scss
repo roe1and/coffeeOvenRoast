@@ -1,5 +1,10 @@
+ion-content {
+    --background: #000 url('../../assets/background-dark.jpg') repeat;
+}
+
 ion-grid {
     height: 100%;
+
     ion-row {
         height: 25%;
       }
@@ -7,25 +12,41 @@ ion-grid {
 
 ion-card {
     height: 90%;
+    background-color: wheat;
 }
+
 .done {
     text-align: center;
     color: white;
     padding: 10% 0;
-
 }
 
 p {
     font-size: 3em;
     text-shadow: 2px 2px black;
+    font-weight: bold;
 }
 
 .card1-done {
     --background: rgb(167, 167, 167);
-    background-image: url("../../assets/beans-green.JPG");
+    background-image: url("../../assets/1.PNG");
     background-size: cover;
 }
 
 .card2-done {
     --background: rgb(107, 107, 107);
+    background-image: url("../../assets/2.PNG");
+    background-size: cover;
+}
+
+.card3-done {
+    --background: rgb(107, 107, 107);
+    background-image: url("../../assets/3.PNG");
+    background-size: cover;
+}
+
+.card4-done {
+    --background: rgb(107, 107, 107);
+    background-image: url("../../assets/4.PNG");
+    background-size: cover;
 }

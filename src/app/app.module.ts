@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Toast } from '@ionic-native/toast/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +24,9 @@ import { Vibration } from '@ionic-native/vibration/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Insomnia,
     NativeAudio,
-    Vibration
+    Vibration,
+    ScreenOrientation,
+    Toast,
   ],
   bootstrap: [AppComponent]
 })
