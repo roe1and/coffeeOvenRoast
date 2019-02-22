@@ -1,12 +1,70 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    <ion-grid>
+      <ion-row class="ion-activatable">
+        <ion-col>
+          <ion-card 
+            (click)="!disable_p1_click && startTimer1(11)" 
+            [ngClass]="{
+            'card1-done': p1_done
+            }">
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-card-header [hidden]="hide_p1">
+              <ion-card-subtitle>Phase 1</ion-card-subtitle>
+              <ion-card-title>{{p1}}</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-progress-bar [hidden]="hide_p1" value="{{percent1}}"></ion-progress-bar>
+              <div [hidden]="!hide_p1" class="done"><p>Done</p></div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card (click)="startTimer2(11)" [ngClass]="{
+            'card2-done': p2_done
+            }">
+            <ion-card-header>
+              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
+              <ion-card-title>{{p2}}</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-progress-bar value="{{percent2}}"></ion-progress-bar>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card (click)="startTimer3(3)">
+            <ion-card-header>
+              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
+              <ion-card-title>{{p3}}</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <ion-progress-bar value="{{percent3}}"></ion-progress-bar>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card (click)="startTimer4(3)">
+            <ion-card-header>
+              <ion-card-subtitle>Coffee roasting</ion-card-subtitle>
+              <ion-card-title>{{p4}}</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-progress-bar value="{{percent4}}"></ion-progress-bar>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>

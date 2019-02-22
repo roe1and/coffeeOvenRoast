@@ -1,1 +1,31 @@
+ion-grid {
+    height: 100%;
+    ion-row {
+        height: 25%;
+      }
+}
 
+ion-card {
+    height: 90%;
+}
+.done {
+    text-align: center;
+    color: white;
+    padding: 10% 0;
+
+}
+
+p {
+    font-size: 3em;
+    text-shadow: 2px 2px black;
+}
+
+.card1-done {
+    --background: rgb(167, 167, 167);
+    background-image: url("../../assets/beans-green.JPG");
+    background-size: cover;
+}
+
+.card2-done {
+    --background: rgb(107, 107, 107);
+}
