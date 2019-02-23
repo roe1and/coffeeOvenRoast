@@ -7,7 +7,9 @@ show countdown in m:ss (make pretty)
 
 double click to reset (fix!!)
 
-double back to exit
+double back to exit (fix!!)
+
+design icon and splash screen
 
 reminder over temp at start
 
