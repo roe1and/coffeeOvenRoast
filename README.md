@@ -3,9 +3,9 @@ Coffe roast timer app built on Ionic 4
 
 Todo:
 
-show countdown in mm:ss
+show countdown in m:ss (make pretty)
 
-fix?? double click to reset
+double click to reset (fix!!)
 
 double back to exit
 
