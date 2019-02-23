@@ -9,6 +9,10 @@ double click to reset (fix!!)
 
 double back to exit
 
+reminder over temp at start
+
+add more time at the end
+
 set volume on startup
 
 load "recipe" from json
