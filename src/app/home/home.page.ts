@@ -46,6 +46,7 @@ export class HomePage {
   delay = 200;
   color = 'primary';
   reset_id = 'inactive';
+  stop_timer = false;
 
   constructor (
     private insomnia: Insomnia,
@@ -90,6 +91,12 @@ export class HomePage {
         this.disable_click_p2 = false;
         this.vibration.vibrate(200);
         this.nativeAudio.play('ding');
+      }
+      if (this.stop_timer === true) {
+        console.log('stop');
+        clearInterval(this.timer);
+        this.elapsed = 0;
+        this.stop_timer = false;
       }
       this.percent1 = this.elapsed / duration;
       this.elapsed++;
@@ -174,6 +181,7 @@ export class HomePage {
       .subscribe(() => {
         console.log('ready to delete');
         this.color = 'primary';
+        this.stop_timer = true;
         this.reset();
       });
 
