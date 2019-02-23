@@ -39,8 +39,8 @@ export class HomePage {
   p4_done = false;
   timer: any = false;
   elapsed = 0;
-  m = 0;
-  s = 0;
+  m: number;
+  s: number;
   preventSingleClick = false;
   click_timer: any;
   delay = 200;
@@ -76,6 +76,8 @@ export class HomePage {
     }
 
   startTimer1 (duration: number) {
+    this.m = 0;
+    this.s = 0;
     this.timer = false;
     this.percent1 = 0;
     this.disable_click_p1 = true;
@@ -100,6 +102,9 @@ export class HomePage {
       }
       this.percent1 = this.elapsed / duration;
       this.elapsed++;
+      this.m = Math.floor((duration - this.elapsed) / 60);
+      this.s = (duration - this.elapsed) - this.m * 60;
+      console.log(this.m, this.s);
     }, 1000);
   }
 

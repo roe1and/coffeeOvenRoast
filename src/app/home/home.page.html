@@ -9,7 +9,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p1 && startTimer1(8)" 
+          (click)="!disable_click_p1 && startTimer1(77)" 
           [ngClass]="{
           'card1-done': p1_done
           }">
@@ -21,6 +21,8 @@
         
           <ion-card-content>
             <ion-progress-bar [hidden]="hide_p1" value="{{percent1}}"></ion-progress-bar>
+            <span [hidden]="hide_p1">{{m}}:{{s | number:'2.0-0'}}</span>
+
             <div [hidden]="!hide_p1" class="done"><p>Done</p></div>
           </ion-card-content>
         </ion-card>
