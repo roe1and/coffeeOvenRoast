@@ -165,7 +165,7 @@ export class HomePage {
     this.color = 'danger';
     const confirm$ = fromEvent(document.getElementById('reset'), 'click');
     this.reset_id = 'reset';
-    const timer$ = timer(3000);
+    const timer$ = timer(4000);
 
     confirm$
       .pipe(
