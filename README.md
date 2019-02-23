@@ -12,3 +12,5 @@ double back to exit
 set volume on startup
 
 load "recipe" from json
+
+add info button with app description
