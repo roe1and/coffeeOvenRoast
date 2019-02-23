@@ -1,7 +1,7 @@
 
 <ion-content class="content" padding>
-  <ion-fab *ngIf='show_reset' vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="reset()">
+  <ion-fab *ngIf='show_reset' vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
+    <ion-fab-button [color]="color" (click)="delete()">
       <ion-icon name="refresh-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -9,7 +9,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p1 && startTimer1(240)" 
+          (click)="!disable_click_p1 && startTimer1(8)" 
           [ngClass]="{
           'card1-done': p1_done
           }">
@@ -30,7 +30,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p2 && startTimer2(180)" 
+          (click)="!disable_click_p2 && startTimer2(7)" 
           [ngClass]="{
           'card2-done': p2_done
           }">
@@ -51,7 +51,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p3 && startTimer3(180)" 
+          (click)="!disable_click_p3 && startTimer3(7)" 
           [ngClass]="{
           'card3-done': p3_done
           }">
@@ -72,7 +72,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p4 && startTimer4(180)" 
+          (click)="!disable_click_p4 && startTimer4(7)" 
           [ngClass]="{
           'card4-done': p4_done
           }">

@@ -5,6 +5,8 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
+import { takeUntil } from 'rxjs/operators';
+import { fromEvent, pipe, timer } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -37,12 +39,14 @@ export class HomePage {
   p4_done = false;
   timer: any = false;
   elapsed = 0;
-  show_reset = false;
   m = 0;
   s = 0;
   preventSingleClick = false;
   click_timer: any;
   delay = 200;
+  color = 'primary';
+  reset_id = 'inactive';
+
   constructor (
     private insomnia: Insomnia,
     private nativeAudio: NativeAudio,
@@ -145,7 +149,6 @@ export class HomePage {
     this.timer = setInterval(() => {
       if (this.elapsed === duration) {
         clearInterval(this.timer);
-        this.show_reset = true;
         this.p4 = 'Done';
         this.elapsed = 0;
         this.p4_done = true;
@@ -158,12 +161,30 @@ export class HomePage {
     }, 1000);
   }
 
-  reset1() {
-    this.toast.show(
-      `Press back again to reset.`,
-      '2000',
-      'center');
-  }
+  delete() {
+    this.color = 'danger';
+    const confirm$ = fromEvent(document.getElementById('reset'), 'click');
+    this.reset_id = 'reset';
+    const timer$ = timer(3000);
+
+    confirm$
+      .pipe(
+        takeUntil(timer$)
+      )
+      .subscribe(() => {
+        console.log('ready to delete');
+        this.color = 'primary';
+        this.reset();
+      });
+
+    timer$
+      .subscribe(() => {
+        this.reset_id = 'inactive';
+        console.log('timer up');
+        this.color = 'primary';
+      });
+    }
+
 
   reset () {
     this.percent1 = 0;
@@ -189,7 +210,6 @@ export class HomePage {
     this.p4_done = false;
     this.timer = false;
     this.elapsed = 0;
-    this.show_reset = false;
   }
 
 }

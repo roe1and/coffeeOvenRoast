@@ -5,7 +5,7 @@ Todo:
 
 show countdown in mm:ss
 
-double click to reset
+fix?? double click to reset
 
 double back to exit
 
