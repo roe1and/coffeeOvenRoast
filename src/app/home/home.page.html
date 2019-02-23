@@ -15,14 +15,15 @@
           }">
           <ion-ripple-effect></ion-ripple-effect>
           <ion-card-header [hidden]="hide_p1">
-            <ion-card-subtitle>Phase 1</ion-card-subtitle>
+            <!-- <ion-card-subtitle>Phase 1</ion-card-subtitle> -->
             <ion-card-title>{{p1}}</ion-card-title>
           </ion-card-header>
         
           <ion-card-content>
-            <ion-progress-bar [hidden]="hide_p1" value="{{percent1}}"></ion-progress-bar>
-            <span [hidden]="hide_p1">{{m}}:{{s | number:'2.0-0'}}</span>
-
+            <ion-progress-bar [hidden]="hide_p1" *ngIf="start_p1" value="{{percent1}}"></ion-progress-bar>
+            <div [hidden]="hide_p1" *ngIf="start_p1">
+              <span>Time remaining: {{m}}:{{s | number:'2.0-0'}}</span>
+            </div>
             <div [hidden]="!hide_p1" class="done"><p>Done</p></div>
           </ion-card-content>
         </ion-card>

@@ -37,6 +37,7 @@ export class HomePage {
   p2_done = false;
   p3_done = false;
   p4_done = false;
+  start_p1 = false;
   timer: any = false;
   elapsed = 0;
   m: number;
@@ -76,6 +77,7 @@ export class HomePage {
     }
 
   startTimer1 (duration: number) {
+    this.start_p1 = true;
     this.m = 0;
     this.s = 0;
     this.timer = false;
@@ -104,7 +106,6 @@ export class HomePage {
       this.elapsed++;
       this.m = Math.floor((duration - this.elapsed) / 60);
       this.s = (duration - this.elapsed) - this.m * 60;
-      console.log(this.m, this.s);
     }, 1000);
   }
 
