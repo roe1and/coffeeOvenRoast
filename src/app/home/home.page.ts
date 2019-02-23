@@ -11,6 +11,7 @@ import { Toast } from '@ionic-native/toast/ngx';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
 export class HomePage {
   percent1: any = 0;
   percent2: any = 0;
@@ -37,7 +38,11 @@ export class HomePage {
   timer: any = false;
   elapsed = 0;
   show_reset = false;
-
+  m = 0;
+  s = 0;
+  preventSingleClick = false;
+  click_timer: any;
+  delay = 200;
   constructor (
     private insomnia: Insomnia,
     private nativeAudio: NativeAudio,
@@ -51,6 +56,7 @@ export class HomePage {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     this.backButtonEvent();
   }
+
 
   backButtonEvent() {
     this.platform.backButton.subscribe(async () => {
@@ -152,6 +158,12 @@ export class HomePage {
     }, 1000);
   }
 
+  reset1() {
+    this.toast.show(
+      `Press back again to reset.`,
+      '2000',
+      'center');
+  }
 
   reset () {
     this.percent1 = 0;
@@ -168,9 +180,9 @@ export class HomePage {
     this.disable_click_p4 = true;
     this.seconds = 0;
     this.p1 = 'Tap to start';
-    this.p2 = 'Phase 2';
-    this.p3 = 'Phase 3';
-    this.p4 = 'Phase 4';
+    this.p2 = 'Disabled';
+    this.p3 = 'Disabled';
+    this.p4 = 'Disabled';
     this.p1_done = false;
     this.p2_done = false;
     this.p3_done = false;
