@@ -1,4 +1,11 @@
 
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Ionic Blank
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 <ion-content class="content" padding>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
     <ion-fab-button [color]="color" (click)="delete()">
@@ -9,7 +16,7 @@
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p1 && startTimer1(77)" 
+          (click)="!disable_click_p1 && startTimer1(7)" 
           [ngClass]="{
           'card1-done': p1_done
           }">
@@ -94,7 +101,7 @@
     </ion-row>
 
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+  <ion-fab [hidden]="overtime_button" vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button>
       <ion-icon name="arrow-dropup"></ion-icon>
     </ion-fab-button>

@@ -32,7 +32,6 @@ export class HomePage {
   p2 = 'Disabled';
   p3 = 'Disabled';
   p4 = 'Disabled';
-
   p1_done = false;
   p2_done = false;
   p3_done = false;
@@ -49,7 +48,7 @@ export class HomePage {
   reset_id = 'inactive';
   stop_timer = false;
   overtime = true;
-  overtime_button = false;
+  overtime_button = true;
 
   constructor (
     private insomnia: Insomnia,
@@ -168,6 +167,7 @@ export class HomePage {
         this.elapsed = 0;
         this.p4_done = true;
         this.hide_p4 = true;
+        this.overtime_button = false;
         this.vibration.vibrate(200);
         this.nativeAudio.play('ding');
       }
