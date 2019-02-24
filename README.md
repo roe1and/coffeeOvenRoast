@@ -9,7 +9,7 @@ double click to reset (fix!!)
 
 double back to exit (fix!!)
 
-design icon and splash screen
+design icon and splash screen (but nicer)
 
 reminder over temp at start
 
