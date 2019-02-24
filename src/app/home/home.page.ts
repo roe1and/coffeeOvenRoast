@@ -48,6 +48,8 @@ export class HomePage {
   color = 'primary';
   reset_id = 'inactive';
   stop_timer = false;
+  overtime = false;
+  overtime_button = false;
 
   constructor (
     private insomnia: Insomnia,
@@ -96,7 +98,7 @@ export class HomePage {
         this.vibration.vibrate(200);
         this.nativeAudio.play('ding');
       }
-      if (this.stop_timer === true) {
+      if (this.stop_timer === true) { // not working
         console.log('stop');
         clearInterval(this.timer);
         this.elapsed = 0;
@@ -174,6 +176,25 @@ export class HomePage {
     }, 1000);
   }
 
+
+  addTime(time: number) {
+    this.overtime = true;
+    this.overtime_button = false;
+    this.timer = setInterval(() => {
+      if (this.elapsed === time) {
+        clearInterval(this.timer);
+        this.overtime = false;
+        this.overtime_button = true;
+        this.elapsed = 0;
+        this.vibration.vibrate(200);
+        this.nativeAudio.play('ding');
+      }
+      this.elapsed++;
+      this.m = Math.floor((time - this.elapsed) / 60);
+      this.s = (time - this.elapsed) - this.m * 60;
+    }, 1000);
+  }
+
   delete() {
     this.color = 'danger';
     const confirm$ = fromEvent(document.getElementById('reset'), 'click');
@@ -198,7 +219,6 @@ export class HomePage {
         this.color = 'primary';
       });
     }
-
 
   reset () {
     this.percent1 = 0;
