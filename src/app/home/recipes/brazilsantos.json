@@ -1,0 +1,20 @@
+{
+    "recipes": [
+        {
+            "name": "Brazil Santos",
+            "roast": "Medium",
+            "description": "yummy",
+            "start-temp": 190,
+            "main-temp": 270,
+            "intervals": [240, 180, 180, 180]
+        },
+        {
+            "name": "Brazil Catuai",
+            "roast": "Medium",
+            "description": "also yummy",
+            "start-temp": 190,
+            "main-temp": 270,
+            "intervals": [240, 180, 180, 180]
+        }
+    ]
+}
