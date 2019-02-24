@@ -6,12 +6,11 @@ import { Recipe } from './home/recipes/recipes';
 
 @Injectable()
 export class AppService {
-  recipe_url = './home/recipes/recipes.json';
+  recipe_url = 'assets/recipes.json';
 
   constructor(
       private http: HttpClient
     ) { }
-
 
   getRecipes (): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.recipe_url);

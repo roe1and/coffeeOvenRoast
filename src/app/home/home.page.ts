@@ -77,7 +77,7 @@ export class HomePage implements OnInit {
 
   getRecipes(): void {
     this.appService.getRecipes()
-      .subscribe(recipes => this.recipes = recipes);
+      .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
   }
 
   backButtonEvent() {
