@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
@@ -8,13 +8,18 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { takeUntil } from 'rxjs/operators';
 import { fromEvent, pipe, timer } from 'rxjs';
 
+import { Recipe } from '../home/recipes/recipes';
+
+import { AppService } from '../app.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
+  providers: [ AppService ],
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
   percent1: any = 0;
   percent2: any = 0;
   percent3: any = 0;
@@ -49,6 +54,7 @@ export class HomePage {
   stop_timer = false;
   overtime = true;
   overtime_button = true;
+  recipes: Recipe[];
 
   constructor (
     private insomnia: Insomnia,
@@ -57,6 +63,7 @@ export class HomePage {
     private screenOrientation: ScreenOrientation,
     private toast: Toast,
     private platform: Platform,
+    private appService: AppService,
     ) {
     this.insomnia.keepAwake();
     this.nativeAudio.preloadSimple('ding', 'assets/Bell-sound-effect-ding.mp3');
@@ -64,6 +71,14 @@ export class HomePage {
     this.backButtonEvent();
   }
 
+  ngOnInit() {
+    this.getRecipes();
+  }
+
+  getRecipes(): void {
+    this.appService.getRecipes()
+      .subscribe(recipes => this.recipes = recipes);
+  }
 
   backButtonEvent() {
     this.platform.backButton.subscribe(async () => {

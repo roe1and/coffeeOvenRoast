@@ -1,9 +1,14 @@
 
 <ion-header>
     <ion-toolbar class="header">
-      <ion-title>
-        Brazil Santos: Medium
-      </ion-title>
+      <ion-list>
+        <ion-item>
+          <ion-label>Recipe</ion-label>
+          <ion-select *ngFor="let recipe of recipes" placeholder="Please select">
+            <ion-select-option value="f">{{recipe.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        </ion-list>
     </ion-toolbar>
   </ion-header>
 <ion-content class="content" padding>
