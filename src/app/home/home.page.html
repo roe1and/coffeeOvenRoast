@@ -99,9 +99,14 @@
       <ion-icon name="arrow-dropup"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-button (click)="addTime(240)">3 minutes</ion-button>
+      <ion-button (click)="addTime(180)">3 minutes</ion-button>
       <ion-button (click)="addTime(120)">2 minutes</ion-button>
       <ion-button (click)="addTime(60)">1 minute</ion-button>
     </ion-fab-list>
   </ion-fab>
+  <ion-fab [hidden]="overtime" vertical="center" horizontal="center" slot="fixed">
+      <ion-fab-button>
+        {{m}}:{{s | number:'2.0-0'}}
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

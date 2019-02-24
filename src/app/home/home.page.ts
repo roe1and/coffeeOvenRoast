@@ -48,7 +48,7 @@ export class HomePage {
   color = 'primary';
   reset_id = 'inactive';
   stop_timer = false;
-  overtime = false;
+  overtime = true;
   overtime_button = false;
 
   constructor (
@@ -80,8 +80,8 @@ export class HomePage {
 
   startTimer1 (duration: number) {
     this.start_p1 = true;
-    this.m = 0;
-    this.s = 0;
+    this.m = Math.floor(duration / 60);
+    this.s = duration - this.m * 60;
     this.timer = false;
     this.percent1 = 0;
     this.disable_click_p1 = true;
@@ -178,13 +178,15 @@ export class HomePage {
 
 
   addTime(time: number) {
-    this.overtime = true;
-    this.overtime_button = false;
+    this.overtime = false;
+    this.overtime_button = true;
+    this.m = Math.floor(time / 60);
+    this.s = time - this.m * 60;
     this.timer = setInterval(() => {
       if (this.elapsed === time) {
         clearInterval(this.timer);
-        this.overtime = false;
-        this.overtime_button = true;
+        this.overtime = true;
+        this.overtime_button = false;
         this.elapsed = 0;
         this.vibration.vibrate(200);
         this.nativeAudio.play('ding');
