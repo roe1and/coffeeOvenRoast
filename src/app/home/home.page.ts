@@ -5,7 +5,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, mergeMap } from 'rxjs/operators';
 import { fromEvent, pipe, timer } from 'rxjs';
 
 import { Recipe } from '../home/recipes/recipes';
@@ -80,8 +80,9 @@ export class HomePage implements OnInit {
       .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
   }
 
-  setRecipe(recipeNumber: number) {
-    console.log('recipeNumber');
+  setRecipe($event) {
+    console.log($event.target.value);
+    console.log(this.recipes[$event.target.value]);
   }
 
   backButtonEvent() {
@@ -122,10 +123,11 @@ export class HomePage implements OnInit {
         this.elapsed = 0;
         this.stop_timer = false;
       }
-      this.percent1 = this.elapsed / duration;
-      this.elapsed++;
       this.m = Math.floor((duration - this.elapsed) / 60);
       this.s = (duration - this.elapsed) - this.m * 60;
+      this.percent1 = this.elapsed / duration;
+      this.elapsed++;
+
     }, 1000);
   }
 
@@ -195,7 +197,6 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
-
   addTime(time: number) {
     this.overtime = false;
     this.overtime_button = true;
@@ -216,7 +217,7 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
-  delete() {
+  resetTimer() {
     this.color = 'danger';
     this.toast.show(
       `Press again to reset.`,
