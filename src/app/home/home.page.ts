@@ -80,6 +80,10 @@ export class HomePage implements OnInit {
       .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
   }
 
+  setRecipe(recipeNumber: number) {
+    console.log('recipeNumber');
+  }
+
   backButtonEvent() {
     this.platform.backButton.subscribe(async () => {
       this.toast.show(
@@ -214,6 +218,14 @@ export class HomePage implements OnInit {
 
   delete() {
     this.color = 'danger';
+    this.toast.show(
+      `Press again to reset.`,
+      '2000',
+      'center')
+      .subscribe(toast => {
+          // console.log(JSON.stringify(toast));
+      });
+
     const confirm$ = fromEvent(document.getElementById('reset'), 'click');
     this.reset_id = 'reset';
     const timer$ = timer(4000);

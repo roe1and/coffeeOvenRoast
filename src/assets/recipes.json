@@ -5,7 +5,15 @@
             "roast": "Medium",
             "description": "yummy",
             "starttemp": 190,
-            "maintemp": 270,
+            "maintemp": 235,
+            "intervals": [240, 180, 180, 180]
+        },
+        {
+            "name": "Brazil Catuai",
+            "roast": "Dark",
+            "description": "also yummy",
+            "starttemp": 220,
+            "maintemp": 235,
             "intervals": [240, 180, 180, 180]
         },
         {
@@ -13,7 +21,7 @@
             "roast": "Medium",
             "description": "also yummy",
             "starttemp": 190,
-            "maintemp": 270,
+            "maintemp": 235,
             "intervals": [240, 180, 180, 180]
         }
     ]

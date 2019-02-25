@@ -4,8 +4,14 @@
       <ion-list>
         <ion-item>
           <ion-label>Recipe</ion-label>
-          <ion-select *ngFor="let recipe of recipes" placeholder="Please select">
-            <ion-select-option value="f">{{recipe.name}}</ion-select-option>
+          <ion-select
+            interface="popover" 
+            placeholder="Please select">
+            <ion-select-option 
+              mode="md"
+              *ngFor="let recipe of recipes?.recipes; let i = index">
+                {{recipe.name}} ({{recipe.roast}})
+            </ion-select-option>
           </ion-select>
         </ion-item>
         </ion-list>
@@ -114,6 +120,7 @@
       <ion-button (click)="addTime(180)">3 minutes</ion-button>
       <ion-button (click)="addTime(120)">2 minutes</ion-button>
       <ion-button (click)="addTime(60)">1 minute</ion-button>
+      <ion-button (click)="addTime(10)">10 seconds</ion-button>
     </ion-fab-list>
   </ion-fab>
   <ion-fab [hidden]="overtime" vertical="center" horizontal="center" slot="fixed">
