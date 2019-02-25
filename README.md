@@ -9,11 +9,15 @@ double click to reset (fix!!)
 
 double back to exit (fix!!)
 
+Tick sound inbetween
+
+Coffee facts
+
 design icon and splash screen (but nicer)
 
 reminder over temp at start
 
-add more time at the end
+add more time at the end (done)
 
 set volume on startup
 
