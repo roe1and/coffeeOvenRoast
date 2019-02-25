@@ -2,7 +2,7 @@
     "recipes": [
         {
             "name": "Brazil Santos",
-            "roast": "Medium",
+            "variant": "Medium",
             "description": "yummy",
             "starttemp": 190,
             "maintemp": 235,
@@ -10,19 +10,19 @@
         },
         {
             "name": "Brazil Catuai",
-            "roast": "Dark",
+            "variant": "Dark",
             "description": "also yummy",
             "starttemp": 220,
             "maintemp": 235,
-            "intervals": [240, 180, 180, 180]
+            "intervals": [250, 180, 180, 180]
         },
         {
             "name": "Brazil Catuai",
-            "roast": "Medium",
+            "variant": "Medium",
             "description": "also yummy",
             "starttemp": 190,
             "maintemp": 235,
-            "intervals": [240, 180, 180, 180]
+            "intervals": [260, 180, 180, 180]
         }
     ]
 }

@@ -19,24 +19,24 @@
         </ion-list>
     </ion-toolbar>
   </ion-header>
-<ion-content class="content" padding>
+<ion-content class="content" padding *ngIf="showcontent">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
     <ion-fab-button [color]="color" (click)="resetTimer()">
       <ion-icon name="refresh-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-grid>
+  <ion-grid *ngFor="let interval of current_recipe">
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
-          (click)="!disable_click_p1 && startTimer1(240)" 
+          (click)="!disable_click_p1 && startTimer1(interval)" 
           [ngClass]="{
           'card1-done': p1_done
           }">
           <ion-ripple-effect></ion-ripple-effect>
           <ion-card-header [hidden]="hide_p1">
             <!-- <ion-card-subtitle>Phase 1</ion-card-subtitle> -->
-            <ion-card-title>{{p1}}</ion-card-title>
+            <ion-card-title>{{p1}} {{interval}}</ion-card-title>
           </ion-card-header>
         
           <ion-card-content>

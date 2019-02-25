@@ -5,8 +5,8 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { takeUntil, mergeMap } from 'rxjs/operators';
-import { fromEvent, pipe, timer } from 'rxjs';
+import { takeUntil, mergeMap, map } from 'rxjs/operators';
+import { fromEvent, pipe, timer, Observable } from 'rxjs';
 
 import { Recipe } from '../home/recipes/recipes';
 
@@ -55,6 +55,8 @@ export class HomePage implements OnInit {
   overtime = true;
   overtime_button = true;
   recipes: Recipe[];
+  current_recipe: Recipe;
+  showcontent = false;
 
   constructor (
     private insomnia: Insomnia,
@@ -78,11 +80,15 @@ export class HomePage implements OnInit {
   getRecipes(): void {
     this.appService.getRecipes()
       .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
+
   }
 
   setRecipe($event) {
-    console.log($event.target.value);
-    console.log(this.recipes[$event.target.value]);
+    this.showcontent = true;
+    const id = $event.target.value;
+    console.log(id);
+    this.current_recipe =  this.recipes['recipes'][id]['intervals'];
+    console.log(this.current_recipe);
   }
 
   backButtonEvent() {

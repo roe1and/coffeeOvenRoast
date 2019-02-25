@@ -4,7 +4,7 @@ export interface Recipe {
 
 export interface IndividualRecipe {
   name: string;
-  roast: string;
+  variant: string;
   description: string;
   starttemp: number;
   maintemp: number;
