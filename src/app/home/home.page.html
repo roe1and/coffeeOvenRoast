@@ -1,24 +1,40 @@
 
-<ion-header>
-    <ion-toolbar class="header">
-      <ion-list>
-        <ion-item>
-          <ion-label>Recipe</ion-label>
-          <ion-select
-            interface="popover" 
-            placeholder="Please select"
-            (ionChange)="setRecipe($event)">
-            <ion-select-option 
-              *ngFor="let recipe of recipes?.recipes; let i = index"
-              value="{{i}}"
-              mode="md">
-                {{recipe.name}} ({{recipe.roast}})
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-        </ion-list>
+<ion-menu side="start" menuId="first">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Start Menu</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-list>
+      <ion-item>
+        <ion-label>Recipe</ion-label>
+        <ion-select
+          interface="popover" 
+          placeholder="Please select"
+          (ionChange)="setRecipe($event)">
+          <ion-select-option 
+            *ngFor="let recipe of recipes?.recipes; let i = index"
+            value="{{i}}"
+            mode="md">
+              {{recipe.name}} ({{recipe.roast}})
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="content" padding *ngIf="showcontent">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
     <ion-fab-button [color]="color" (click)="resetTimer()">
