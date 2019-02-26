@@ -6,7 +6,7 @@
             "description": "yummy",
             "starttemp": 190,
             "maintemp": 235,
-            "intervals": [240, 180, 180, 180]
+            "intervals": [9, 180, 180, 180]
         },
         {
             "name": "Brazil Catuai",

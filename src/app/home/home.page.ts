@@ -73,8 +73,6 @@ export class HomePage implements OnInit {
     this.backButtonEvent();
   }
 
-
-
   ngOnInit() {
     this.getRecipes();
   }
