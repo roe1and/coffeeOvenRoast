@@ -80,7 +80,6 @@ export class HomePage implements OnInit {
   getRecipes(): void {
     this.appService.getRecipes()
       .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
-
   }
 
   setRecipe($event) {
