@@ -87,6 +87,6 @@
     <plugin name="cordova-plugin-vibration" spec="3.1.0" />
     <plugin name="cordova-plugin-screen-orientation" spec="3.0.1" />
     <plugin name="cordova-plugin-x-toast" spec="2.7.2" />
-    <engine name="android" spec="7.1.4" />
     <plugin name="cordova-sqlite-storage" spec="3.1.0" />
+    <engine name="android" spec="7.1.4" />
 </widget>
