@@ -14,7 +14,7 @@ import { Temperature } from './config.types';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  temperatures: Temperature[];
+  temperatures: Temperature;
 
   constructor(
     private platform: Platform,
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.temperatures = this.getTemperature();
+    this.temperatures = this.getTemperature();
   }
 
   ionViewWillEnter() {
@@ -40,10 +40,10 @@ export class AppComponent implements OnInit {
   changeTempToggle() {
 
     if (this.temperatures['temperatures'] === 'celsius') {
-      this.appService.setTemp({'temperature': 'farenheit'});
+      this.appService.setTemp('farenheit');
       // this.temperatures['temperatures'] = 'farenheit';
     } else {
-      this.appService.setTemp({'temperature': 'celsius'});
+      this.appService.setTemp('celsius');
       // this.temperatures['temperatures'] = 'celsius';
     }
 

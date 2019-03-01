@@ -1,0 +1,6 @@
+{
+  "appId": "rs.coffeeroast.app",
+  "appName": "Coffee oven roast app",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

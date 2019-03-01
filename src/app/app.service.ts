@@ -9,7 +9,7 @@ import { Temperature } from './config.types';
 export class AppService {
   recipe_url = 'assets/recipes.json';
   config_url = 'assets/config.json';
-  private temperatures: Temperature[];
+  private temperatures;
 
   constructor(
       private http: HttpClient,
@@ -19,18 +19,24 @@ export class AppService {
   getRecipes (): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.recipe_url);
   }
+  /*
+  storage.set('name', 'Max');
 
+  // Or to get a key/value pair
+  storage.get('age').then((val) => {
+    console.log('Your age is', val);
+  });
+  */
   getTemp() {
     return this.storage.get('temperatures').then(
       (temperatures) => {
         this.temperatures = temperatures == null ? {'temperture': 'celcius'} : temperatures;
-        return [...this.temperatures];
+        return this.temperatures;
       }
     );
   }
 
   setTemp(temp: Temperature) {
-    this.temperatures.pop();
-    this.temperatures.push(temp);
+    this.storage.set('temperature', temp);
   }
 }
