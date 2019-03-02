@@ -89,4 +89,5 @@
     <plugin name="cordova-plugin-x-toast" spec="2.7.2" />
     <plugin name="cordova-sqlite-storage" spec="3.1.0" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-plugin-nativestorage" spec="2.3.2" />
 </widget>
