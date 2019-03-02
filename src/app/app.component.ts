@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { AppService } from './app.service';
-import { Temperature } from './config.types';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
@@ -15,7 +14,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  temperatures;
+  temp_unit;
 
   constructor(
     private platform: Platform,
@@ -32,7 +31,7 @@ export class AppComponent implements OnInit {
     this.initializeApp();
     console.log('opened');
     this.platform.ready().then((readySource) => {
-      this.temperatures = this.getTemperature();
+      this.temp_unit = this.getTemperature();
     });
   }
 
@@ -44,31 +43,31 @@ export class AppComponent implements OnInit {
     this.nativeStorage.getItem('tempUnit')
     .then(
       (temperatures) => {
-        this.temperatures = temperatures == null ? 'celsius' : temperatures;
-        console.log('temp', this.temperatures);
+        this.temp_unit = temperatures == null ? 'celsius' : temperatures;
+        console.log('temp', this.temp_unit);
       }
     );
   }
 
   changeTempToggle() {
 
-    if (this.temperatures === 'celsius') {
+    if (this.temp_unit === 'celsius') {
       this.nativeStorage.setItem('tempUnit', 'farenheit')
         .then(
-        () => console.log('Stored item this.temperatures =!'),
+        () => console.log('Stored item this.temp_unit =!'),
         error => console.error('Error storing item', error)
       );
-      this.temperatures = 'farenheit';
-    } else if (this.temperatures === 'farenheit') {
+      this.temp_unit = 'farenheit';
+    } else if (this.temp_unit === 'farenheit') {
       this.nativeStorage.setItem('tempUnit', 'celsius')
         .then(
         () => console.log('Stored item celsius!'),
         error => console.error('Error storing item', error)
       );
-      this.temperatures = 'celsius';
+      this.temp_unit = 'celsius';
     }
 
-    console.log('current', this.temperatures);
+    console.log('current', this.temp_unit);
   }
 
   initializeApp() {

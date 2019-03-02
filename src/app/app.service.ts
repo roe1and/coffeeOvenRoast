@@ -10,7 +10,6 @@ export class AppService {
   recipe_url = 'assets/recipes.json';
   config_url = 'assets/config.json';
 
-
   constructor(
       private http: HttpClient,
       public nativeStorage: NativeStorage,
