@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.temperatures = this.getTemperature();
+    // this.temperatures = this.getTemperature();
   }
 
   ionViewWillEnter() {
@@ -40,10 +40,10 @@ export class AppComponent implements OnInit {
   changeTempToggle() {
 
     if (this.temperatures['temperatures'] === 'celsius') {
-      this.appService.setTemp('farenheit');
+      // this.appService.setTemp('farenheit');
       // this.temperatures['temperatures'] = 'farenheit';
     } else {
-      this.appService.setTemp('celsius');
+      // this.appService.setTemp('celsius');
       // this.temperatures['temperatures'] = 'celsius';
     }
 

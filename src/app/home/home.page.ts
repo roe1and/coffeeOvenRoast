@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
@@ -9,7 +9,7 @@ import { takeUntil, mergeMap, map } from 'rxjs/operators';
 import { fromEvent, pipe, timer, Observable } from 'rxjs';
 
 import { Recipe } from '../home/recipes/recipes';
-
+import { AudioService } from './shared/audio.service';
 import { AppService } from '../app.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { AppService } from '../app.service';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, AfterViewInit {
   percent1: any = 0;
   percent2: any = 0;
   percent3: any = 0;
@@ -66,6 +66,7 @@ export class HomePage implements OnInit {
     private toast: Toast,
     private platform: Platform,
     private appService: AppService,
+    private audio: AudioService,
     ) {
     this.insomnia.keepAwake();
     this.nativeAudio.preloadSimple('ding', 'assets/Bell-sound-effect-ding.mp3');
@@ -75,6 +76,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getRecipes();
+  }
+  ngAfterViewInit() {
+    this.audio.preload('tabSwitch', 'assets/Bell-sound-effect-ding.mp3');
   }
 
   getRecipes(): void {
@@ -120,7 +124,8 @@ export class HomePage implements OnInit {
         this.hide_p1 = true;
         this.disable_click_p2 = false;
         this.vibration.vibrate(200);
-        this.nativeAudio.play('ding');
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
       }
       if (this.stop_timer === true) { // not working
         console.log('stop');
@@ -151,7 +156,8 @@ export class HomePage implements OnInit {
         this.hide_p2 = true;
         this.disable_click_p3 = false;
         this.vibration.vibrate(200);
-        this.nativeAudio.play('ding');
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
       }
       this.percent2 = this.elapsed / duration;
       this.elapsed++;
@@ -173,7 +179,8 @@ export class HomePage implements OnInit {
         this.hide_p3 = true;
         this.disable_click_p4 = false;
         this.vibration.vibrate(200);
-        this.nativeAudio.play('ding');
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
       }
       this.percent3 = this.elapsed / duration;
       this.elapsed++;
@@ -195,7 +202,8 @@ export class HomePage implements OnInit {
         this.hide_p4 = true;
         this.overtime_button = false;
         this.vibration.vibrate(200);
-        this.nativeAudio.play('ding');
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
       }
       this.percent4 = this.elapsed / duration;
       this.elapsed++;
@@ -214,7 +222,8 @@ export class HomePage implements OnInit {
         this.overtime_button = false;
         this.elapsed = 0;
         this.vibration.vibrate(200);
-        this.nativeAudio.play('ding');
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
       }
       this.elapsed++;
       this.m = Math.floor((time - this.elapsed) / 60);
