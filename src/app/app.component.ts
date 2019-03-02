@@ -41,15 +41,31 @@ export class AppComponent implements OnInit {
   }
 
   getTemperature() {
-    this.temperatures = this.appService.getTemp();
+    this.nativeStorage.getItem('tempUnit')
+    .then(
+      (temperatures) => {
+        this.temperatures = temperatures == null ? 'celsius' : temperatures;
+        console.log('temp', this.temperatures);
+      }
+    );
   }
 
   changeTempToggle() {
 
-    if (this.temperatures['temperatures'] === 'celsius') {
-      this.appService.setTemp('farenheit');
-    } else {
-      this.appService.setTemp('celsius');
+    if (this.temperatures === 'celsius') {
+      this.nativeStorage.setItem('tempUnit', 'farenheit')
+        .then(
+        () => console.log('Stored item this.temperatures =!'),
+        error => console.error('Error storing item', error)
+      );
+      this.temperatures = 'farenheit';
+    } else if (this.temperatures === 'farenheit') {
+      this.nativeStorage.setItem('tempUnit', 'celsius')
+        .then(
+        () => console.log('Stored item celsius!'),
+        error => console.error('Error storing item', error)
+      );
+      this.temperatures = 'celsius';
     }
 
     console.log('current', this.temperatures);

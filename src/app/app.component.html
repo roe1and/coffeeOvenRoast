@@ -10,7 +10,7 @@
         <ion-item>Recipes</ion-item>
         <ion-item>Info</ion-item>
         <ion-item *ngIf="temperatures">
-          {{temperatures.unit | titlecase}} 
+          {{temperatures | titlecase}} 
             <ion-toggle
             (ionChange)="changeTempToggle()"></ion-toggle>
         </ion-item>
