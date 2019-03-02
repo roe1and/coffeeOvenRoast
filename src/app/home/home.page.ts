@@ -77,6 +77,7 @@ export class HomePage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getRecipes();
   }
+
   ngAfterViewInit() {
     this.audio.preload('tabSwitch', 'assets/Bell-sound-effect-ding.mp3');
   }

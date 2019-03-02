@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Recipe } from './home/recipes/recipes';
 import { Temperature } from './config.types';
 
@@ -13,7 +13,7 @@ export class AppService {
 
   constructor(
       private http: HttpClient,
-      public storage: Storage,
+      public nativeStorage: NativeStorage,
     ) { }
 
   getRecipes (): Observable<Recipe[]> {
@@ -28,15 +28,17 @@ export class AppService {
   });
   */
   getTemp() {
-    return this.storage.get('temperatures').then(
+    return this.nativeStorage.getItem('tempUnit')
+    .then(
       (temperatures) => {
-        this.temperatures = temperatures == null ? {'temperture': 'celcius'} : temperatures;
+        this.temperatures = temperatures == null ? {'unit': 'celcius'} : temperatures;
+        console.log(this.temperatures);
         return this.temperatures;
       }
     );
   }
 
-  setTemp(temp: Temperature) {
-    this.storage.set('temperature', temp);
+  setTemp(temp: string) {
+    this.nativeStorage.setItem('tempUnit', {unit: temp});
   }
 }

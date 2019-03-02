@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 
 import { AppService } from './app.service';
 import { Temperature } from './config.types';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { Temperature } from './config.types';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  temperatures: Temperature;
+  temperatures;
 
   constructor(
     private platform: Platform,
@@ -22,29 +23,33 @@ export class AppComponent implements OnInit {
     private appService: AppService,
     private statusBar: StatusBar,
     private storage: Storage,
+    private nativeStorage: NativeStorage
   ) {
-    this.initializeApp();
+
   }
 
   ngOnInit() {
-    // this.temperatures = this.getTemperature();
+    this.initializeApp();
+    console.log('opened');
+    this.platform.ready().then((readySource) => {
+      this.temperatures = this.getTemperature();
+    });
   }
 
   ionViewWillEnter() {
+
   }
 
   getTemperature() {
-    return this.appService.getTemp();
+    this.temperatures = this.appService.getTemp();
   }
 
   changeTempToggle() {
 
     if (this.temperatures['temperatures'] === 'celsius') {
-      // this.appService.setTemp('farenheit');
-      // this.temperatures['temperatures'] = 'farenheit';
+      this.appService.setTemp('farenheit');
     } else {
-      // this.appService.setTemp('celsius');
-      // this.temperatures['temperatures'] = 'celsius';
+      this.appService.setTemp('celsius');
     }
 
     console.log('current', this.temperatures);
