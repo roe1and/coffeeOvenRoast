@@ -14,6 +14,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class AppComponent implements OnInit {
   temp_unit: string;
 
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -32,26 +33,20 @@ export class AppComponent implements OnInit {
   }
 
   getTemperature() {
-  //  try {
-      this.nativeStorage.getItem('tempUnit')
-      .then(
-        (result) => {
-          this.temp_unit = result;
-        },
-        error => {
-          this.nativeStorage.setItem('tempUnit', 'celsius')
-          .then(
+    this.nativeStorage.getItem('tempUnit')
+    .then(
+      (result) => {
+        this.temp_unit = result;
+      },
+      error => {
+        this.nativeStorage.setItem('tempUnit', 'celsius')
+        .then(
           () => console.log('Stored item this.temp_unit =!'),
           err => console.error('Error storing item', err)
         );
         this.temp_unit = 'celsius';
-
-          console.error('Error storing item', error);
-        }
-      );
-  //  } catch (e) {
-  //    console.log('e', e);
-  //  }
+      }
+    );
   }
 
   changeTempToggle() {
@@ -72,7 +67,6 @@ export class AppComponent implements OnInit {
       this.temp_unit = 'celsius';
     }
 
-    console.log('current', this.temp_unit);
   }
 
   initializeApp() {

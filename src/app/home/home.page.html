@@ -12,8 +12,8 @@
           placeholder="Please select"
           (ionChange)="setRecipe($event)">
           <ion-select-option 
-            *ngFor="let recipe of recipes?.recipes; let i = index"
-            value="{{i}}"
+            *ngFor="let recipe of recipes; let i = index"
+            value="{{recipe.id}}"
             mode="md">
               {{recipe.name}} ({{recipe.variant}})
           </ion-select-option>
@@ -23,12 +23,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="content" padding *ngIf="showcontent">
+  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
     <ion-fab-button [color]="color" (click)="resetTimer()">
       <ion-icon name="refresh-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-grid *ngFor="let interval of current_recipe">
+  <div *ngIf="current_recipe">
+  <ion-grid *ngFor="let interval of current_recipe[0].intervals; let i = index">
+    <ion-row class="ion-activatable">
+      <ion-col>
+        <ion-card>
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-card-content>
+              {{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+  <!--
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
@@ -38,7 +53,7 @@
           }">
           <ion-ripple-effect></ion-ripple-effect>
           <ion-card-header [hidden]="hide_p1">
-            <!-- <ion-card-subtitle>Phase 1</ion-card-subtitle> -->
+            <ion-card-subtitle>Phase 1</ion-card-subtitle>
             <ion-card-title>{{p1}} {{interval}}</ion-card-title>
           </ion-card-header>
         
@@ -52,7 +67,8 @@
         </ion-card>
       </ion-col>
     </ion-row>
-
+    -->
+    <!--
     <ion-row class="ion-activatable">
       <ion-col>
         <ion-card 
@@ -117,6 +133,7 @@
     </ion-row>
 
   </ion-grid>
+    -->
   <ion-fab [hidden]="overtime_button" vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button>
       <ion-icon name="arrow-dropup"></ion-icon>

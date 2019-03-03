@@ -11,6 +11,7 @@ import { fromEvent, pipe, timer, Observable } from 'rxjs';
 import { Recipe } from '../home/recipes/recipes';
 import { AudioService } from './shared/audio.service';
 import { AppService } from '../app.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-home',
@@ -54,9 +55,40 @@ export class HomePage implements OnInit, AfterViewInit {
   stop_timer = false;
   overtime = true;
   overtime_button = true;
-  recipes: Recipe[];
-  current_recipe: Recipe;
+  current_recipe;
   showcontent = false;
+  recipes: any[] = [];
+  init_recipes = {
+    'recipes': [
+      {
+        'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
+        'name': 'Brazil Santos',
+        'variant': 'Medium',
+        'description': 'yummy',
+        'starttemp': 190,
+        'maintemp': 235,
+        'intervals': [9, 180, 180, 180]
+      },
+      {
+        'id': 'e758896c-32ff-440f-a79a-6f642afcb245',
+        'name': 'Brazil Catuai',
+        'variant': 'Dark',
+        'description': 'also yummy',
+        'starttemp': 220,
+        'maintemp': 235,
+        'intervals': [250, 180, 180, 180]
+      },
+      {
+        'id': 'b55390a1-1fa6-426a-bad9-8319a241f26f',
+        'name': 'Brazil Catuai',
+        'variant': 'Medium',
+        'description': 'also yummy',
+        'starttemp': 190,
+        'maintemp': 235,
+        'intervals': [260, 180, 180, 180]
+      }
+    ]
+  };
 
   constructor (
     private insomnia: Insomnia,
@@ -66,6 +98,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private toast: Toast,
     private platform: Platform,
     private appService: AppService,
+    private nativeStorage: NativeStorage,
     private audio: AudioService,
     ) {
     this.insomnia.keepAwake();
@@ -75,23 +108,44 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getRecipes();
+    this.platform.ready().then(() => {
+      this.getRecipes();
+    });
   }
 
   ngAfterViewInit() {
     this.audio.preload('tabSwitch', 'assets/Bell-sound-effect-ding.mp3');
   }
 
-  getRecipes(): void {
-    this.appService.getRecipes()
-      .subscribe((recipe: Recipe[]) => this.recipes = { ...recipe });
+  getRecipes() {
+    this.nativeStorage.getItem('recipes')
+    .then(
+      (result) => {
+        this.recipes = result;
+      },
+      error => {
+        this.nativeStorage.setItem('recipes', this.init_recipes.recipes)
+        .then(
+          () => {
+            this.init_recipes.recipes.forEach((element) => {
+              this.recipes.push(element);
+            });
+            this.recipes = this.init_recipes.recipes;
+          },
+          err => console.error('Error storing item', err)
+        );
+      }
+    );
   }
 
   setRecipe($event) {
     this.showcontent = true;
     const id = $event.target.value;
     console.log(id);
-    this.current_recipe =  this.recipes['recipes'][id]['intervals'];
+    // this.current_recipe =  this.recipes['recipes'][id]['intervals'];
+    this.current_recipe = this.recipes.filter(obj => {
+      return obj.id === id;
+    });
     console.log(this.current_recipe);
   }
 
@@ -106,7 +160,7 @@ export class HomePage implements OnInit, AfterViewInit {
         });
       });
     }
-
+/*
   startTimer1 (duration: number) {
     this.start_p1 = true;
     this.m = Math.floor(duration / 60);
@@ -210,7 +264,7 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elapsed++;
     }, 1000);
   }
-
+*/
   addTime(time: number) {
     this.overtime = false;
     this.overtime_button = true;

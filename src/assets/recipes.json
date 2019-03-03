@@ -1,28 +1,33 @@
 {
-    "recipes": [
-        {
-            "name": "Brazil Santos",
-            "variant": "Medium",
-            "description": "yummy",
-            "starttemp": 190,
-            "maintemp": 235,
-            "intervals": [9, 180, 180, 180]
+    "recipes": [{
+            "14900c38-53d1-4665-bc8c-3d61008eb744": {
+                "name": "Brazil Santos",
+                "variant": "Medium",
+                "description": "yummy",
+                "starttemp": 190,
+                "maintemp": 235,
+                "intervals": [9, 180, 180, 180]
+            }
         },
         {
-            "name": "Brazil Catuai",
-            "variant": "Dark",
-            "description": "also yummy",
-            "starttemp": 220,
-            "maintemp": 235,
-            "intervals": [250, 180, 180, 180]
+            "e758896c-32ff-440f-a79a-6f642afcb245": {
+                "name": "Brazil Catuai",
+                "variant": "Dark",
+                "description": "also yummy",
+                "starttemp": 220,
+                "maintemp": 235,
+                "intervals": [250, 180, 180, 180]
+            }
         },
         {
-            "name": "Brazil Catuai",
-            "variant": "Medium",
-            "description": "also yummy",
-            "starttemp": 190,
-            "maintemp": 235,
-            "intervals": [260, 180, 180, 180]
+            "b55390a1-1fa6-426a-bad9-8319a241f26f": {
+                "name": "Brazil Catuai",
+                "variant": "Medium",
+                "description": "also yummy",
+                "starttemp": 190,
+                "maintemp": 235,
+                "intervals": [260, 180, 180, 180]
+            }
         }
     ]
 }
