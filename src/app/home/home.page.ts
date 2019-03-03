@@ -5,10 +5,9 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { takeUntil, mergeMap, map } from 'rxjs/operators';
-import { fromEvent, pipe, timer, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { fromEvent, timer } from 'rxjs';
 import { AlertController } from '@ionic/angular';
-import { Recipe } from '../home/recipes/recipes';
 import { AudioService } from './shared/audio.service';
 import { AppService } from '../app.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -63,7 +62,7 @@ export class HomePage implements OnInit, AfterViewInit {
   init_recipes = {
     'recipes': [
       {
-        'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
+        'id': '14900c38-53d1-4665-bc8c-3d61008ec744',
         'name': 'Brazil Santos',
         'variant': 'Test',
         'description': 'yummy',

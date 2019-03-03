@@ -3,7 +3,7 @@
     <name>CoffeeRoaster</name>
     <description>App to help with oven coffee roasting</description>
     <author email="scumies@gmx.co.uk" href="http://ionicframework.com/">Roeland Schumacher</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.99:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
