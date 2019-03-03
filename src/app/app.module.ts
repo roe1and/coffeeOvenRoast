@@ -15,12 +15,10 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
-import { MinuteSecondsPipe } from './home/shared/ms.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MinuteSecondsPipe
   ],
   entryComponents: [],
   imports: [

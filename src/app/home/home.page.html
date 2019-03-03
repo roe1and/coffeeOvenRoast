@@ -33,10 +33,10 @@
   <ion-grid *ngFor="let interval of current_recipe[0].intervals; let i = index">
     <ion-row class="ion-activatable">
       <ion-col>
-        <ion-card>
+        <ion-card (click)="startTimer(interval)" >
             <ion-ripple-effect></ion-ripple-effect>
             <ion-card-content>
-              {{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
+              <span *ngIf="time_remain">{{ time_remain | minuteSeconds }}</span>{{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
             </ion-card-content>
         </ion-card>
       </ion-col>

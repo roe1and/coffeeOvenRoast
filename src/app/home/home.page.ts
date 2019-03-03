@@ -58,6 +58,8 @@ export class HomePage implements OnInit, AfterViewInit {
   current_recipe;
   showcontent = false;
   recipes: any[] = [];
+  time_remain: number;
+  clickable: boolean = false;
   init_recipes = {
     'recipes': [
       {
@@ -147,6 +149,24 @@ export class HomePage implements OnInit, AfterViewInit {
       return obj.id === id;
     });
     console.log(this.current_recipe);
+  }
+
+  startTimer(duration: number) {
+    this.clickable = false;
+    this.timer = setInterval(() => {
+      if (this.elapsed === duration) {
+        clearInterval(this.timer);
+        this.vibration.vibrate(200);
+        // this.nativeAudio.play('ding');
+        this.audio.play('tabSwitch');
+        this.time_remain = 0;
+        this.clickable = true;
+      }
+      this.percent1 = this.elapsed / duration;
+      this.elapsed++;
+      this.time_remain = duration - this.elapsed;
+
+    }, 1000);
   }
 
   backButtonEvent() {
