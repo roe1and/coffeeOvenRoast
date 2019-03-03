@@ -65,11 +65,20 @@ export class HomePage implements OnInit, AfterViewInit {
       {
         'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
         'name': 'Brazil Santos',
+        'variant': 'Test',
+        'description': 'yummy',
+        'starttemp': 190,
+        'maintemp': 235,
+        'intervals': [9, 5, 5, 5]
+      },
+      {
+        'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
+        'name': 'Brazil Santos',
         'variant': 'Medium',
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
-        'intervals': [9, 180, 180, 180]
+        'intervals': [240, 200, 200, 200]
       },
       {
         'id': 'e758896c-32ff-440f-a79a-6f642afcb245',
@@ -95,6 +104,7 @@ export class HomePage implements OnInit, AfterViewInit {
     effect: 'flip',
     pagination: false
   };
+  current_roast_phase: number;
 
   constructor (
     private insomnia: Insomnia,
@@ -158,50 +168,66 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   async startAlert() {
+    this.current_roast_phase = 0;
     const temp = this.current_recipe[0].starttemp;
     const temp_unit = 'C';
     const alert = await this.alertController.create({
-    header: 'Roasting, Phase 1',
-    message: 'Important: Before you start preheat the oven to ' + temp + ' °' + temp_unit,
-    buttons: [
-      {
+      header: 'Roasting, Phase 1',
+      message: 'Important: Before you start preheat the oven to ' + temp + ' °' + temp_unit,
+      buttons: [{
         text: 'Cancel',
         role: 'cancel',
         cssClass: 'secondary',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
+          console.log('Confirm Cancel');
         }
-      }, {
-        text: 'Start roasting',
-        handler: () => {
-          console.log('Confirm Okay');
-          this.ovenTempAlert();
-        }
-      }
-    ]
-  });
-
+        },
+        {
+          text: 'Start roasting',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.startOvenTempAlert();
+          }
+        }]
+    });
     await alert.present();
   }
 
-  async ovenTempAlert() {
+  async startOvenTempAlert() {
     const time = this.current_recipe[0].intervals[0];
     const temp = this.current_recipe[0].maintemp;
     const temp_unit = 'C';
     const alert = await this.alertController.create({
-    header: 'Set oven temperature',
-    message: 'Set the oven temperature to ' + temp + ' °' + temp_unit,
-    buttons: [
-     {
+      header: 'Set oven temperature',
+      message: 'Set the oven temperature to ' + temp + ' °' + temp_unit,
+      buttons: [{
         text: 'Done',
         handler: () => {
           console.log('Confirm Okay');
           this.startTimer(time);
         }
-      }
-    ]
-  });
+      }]
+    });
+    await alert.present();
+  }
 
+  async roastPauseAlert() {
+    this.current_roast_phase++;
+    const next_roast_phase: number = this.current_roast_phase + 1;
+    const time = this.current_recipe[0].intervals[next_roast_phase];
+    console.log(time);
+    const temp_unit = 'C';
+    const alert = await this.alertController.create({
+      header: 'Quick pause',
+      message: 'Ready for phase  ' + next_roast_phase + '?',
+      buttons: [{
+        text: 'Let\'s go',
+        handler: () => {
+          this.startTimer(time);
+          console.log('Confirm Okay');
+        }
+      }]
+    });
     await alert.present();
   }
 
@@ -213,14 +239,17 @@ export class HomePage implements OnInit, AfterViewInit {
         this.vibration.vibrate(200);
         // this.nativeAudio.play('ding');
         this.audio.play('tabSwitch');
-        this.time_remain = undefined;
+        this.time_remain = 0;
         this.clickable = false;
+        if (this.current_roast_phase !== this.current_recipe[0].intervals.lenght) {
+          this.roastPauseAlert();
+        }
       }
       this.percent1 = this.elapsed / duration;
       this.elapsed++;
       this.time_remain = duration - this.elapsed;
-
     }, 1000);
+    console.log(this.current_roast_phase);
   }
 
   backButtonEvent() {

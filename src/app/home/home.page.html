@@ -29,8 +29,7 @@
       pager="true" 
       [options]="slideOpts">
       <ion-slide class="ion-activatable" 
-        *ngFor="let interval of current_recipe[0].intervals; let i = index" 
-        (click)="!clickable && startTimer(interval)">
+        *ngFor="let interval of current_recipe[0].intervals; let i = index">
           <span *ngIf="time_remain > 0">{{ time_remain | minuteSeconds }}</span>{{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
       </ion-slide>
     </ion-slides>
