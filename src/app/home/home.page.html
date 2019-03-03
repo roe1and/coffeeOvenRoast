@@ -23,26 +23,46 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="content" padding *ngIf="showcontent">
-  
+
+  <div *ngIf="current_recipe">
+    <ion-slides 
+      pager="true" 
+      [options]="slideOpts">
+      <ion-slide class="ion-activatable" 
+        *ngFor="let interval of current_recipe[0].intervals; let i = index" 
+        (click)="!clickable && startTimer(interval)">
+          <span *ngIf="time_remain > 0">{{ time_remain | minuteSeconds }}</span>{{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+
+
+
+
+
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" [id]="reset_id">
     <ion-fab-button [color]="color" (click)="resetTimer()">
       <ion-icon name="refresh-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <!--
   <div *ngIf="current_recipe">
   <ion-grid *ngFor="let interval of current_recipe[0].intervals; let i = index">
+    
     <ion-row class="ion-activatable">
       <ion-col>
-        <ion-card (click)="startTimer(interval)" >
+        <ion-card (click)="!clickable && startTimer(interval)" >
             <ion-ripple-effect></ion-ripple-effect>
             <ion-card-content>
-              <span *ngIf="time_remain">{{ time_remain | minuteSeconds }}</span>{{ interval | minuteSeconds }}, Roasting phase {{ i + 1 }}
             </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
   </div>
+  -->
   <!--
     <ion-row class="ion-activatable">
       <ion-col>

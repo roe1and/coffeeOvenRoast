@@ -7,7 +7,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
 import { takeUntil, mergeMap, map } from 'rxjs/operators';
 import { fromEvent, pipe, timer, Observable } from 'rxjs';
-
+import { AlertController } from '@ionic/angular';
 import { Recipe } from '../home/recipes/recipes';
 import { AudioService } from './shared/audio.service';
 import { AppService } from '../app.service';
@@ -91,6 +91,10 @@ export class HomePage implements OnInit, AfterViewInit {
       }
     ]
   };
+  slideOpts = {
+    effect: 'flip',
+    pagination: false
+  };
 
   constructor (
     private insomnia: Insomnia,
@@ -102,6 +106,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private appService: AppService,
     private nativeStorage: NativeStorage,
     private audio: AudioService,
+    public alertController: AlertController,
     ) {
     this.insomnia.keepAwake();
     this.nativeAudio.preloadSimple('ding', 'assets/Bell-sound-effect-ding.mp3');
@@ -149,18 +154,67 @@ export class HomePage implements OnInit, AfterViewInit {
       return obj.id === id;
     });
     console.log(this.current_recipe);
+    this.startAlert();
+  }
+
+  async startAlert() {
+    const temp = this.current_recipe[0].starttemp;
+    const temp_unit = 'C';
+    const alert = await this.alertController.create({
+    header: 'Roasting, Phase 1',
+    message: 'Important: Before you start preheat the oven to ' + temp + ' °' + temp_unit,
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Start roasting',
+        handler: () => {
+          console.log('Confirm Okay');
+          this.ovenTempAlert();
+        }
+      }
+    ]
+  });
+
+    await alert.present();
+  }
+
+  async ovenTempAlert() {
+    const time = this.current_recipe[0].intervals[0];
+    const temp = this.current_recipe[0].maintemp;
+    const temp_unit = 'C';
+    const alert = await this.alertController.create({
+    header: 'Set oven temperature',
+    message: 'Set the oven temperature to ' + temp + ' °' + temp_unit,
+    buttons: [
+     {
+        text: 'Done',
+        handler: () => {
+          console.log('Confirm Okay');
+          this.startTimer(time);
+        }
+      }
+    ]
+  });
+
+    await alert.present();
   }
 
   startTimer(duration: number) {
-    this.clickable = false;
+    this.clickable = true;
     this.timer = setInterval(() => {
       if (this.elapsed === duration) {
         clearInterval(this.timer);
         this.vibration.vibrate(200);
         // this.nativeAudio.play('ding');
         this.audio.play('tabSwitch');
-        this.time_remain = 0;
-        this.clickable = true;
+        this.time_remain = undefined;
+        this.clickable = false;
       }
       this.percent1 = this.elapsed / duration;
       this.elapsed++;
