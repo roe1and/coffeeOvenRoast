@@ -5,8 +5,8 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { takeUntil } from 'rxjs/operators';
-import { fromEvent, timer } from 'rxjs';
+import { fromEvent, timer, interval } from 'rxjs';
+import { takeUntil, map, subscribeOn } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 import { AudioService } from './shared/audio.service';
 import { AppService } from '../app.service';
@@ -24,24 +24,7 @@ export class HomePage implements OnInit, AfterViewInit {
   percent2: any = 0;
   percent3: any = 0;
   percent4: any = 0;
-  hide_p1 = false;
-  hide_p2 = false;
-  hide_p3 = false;
-  hide_p4 = false;
-  disable_click_p1 = false;
-  disable_click_p2 = true;
-  disable_click_p3 = true;
-  disable_click_p4 = true;
   seconds = 0;
-  p1 = 'Tap to start';
-  p2 = 'Disabled';
-  p3 = 'Disabled';
-  p4 = 'Disabled';
-  p1_done = false;
-  p2_done = false;
-  p3_done = false;
-  p4_done = false;
-  start_p1 = false;
   timer: any = false;
   elapsed = 0;
   m: number;
@@ -54,11 +37,13 @@ export class HomePage implements OnInit, AfterViewInit {
   stop_timer = false;
   overtime = true;
   overtime_button = true;
-  current_recipe;
-  showcontent = false;
-  recipes: any[] = [];
-  time_remain: number;
   clickable: boolean = false;
+
+  facts = [
+    'Coffees from Rwanda often have a fruitinesss reminicent of red apples and red grapes',
+    'Slow roasted coffee is considered the best',
+    'Coffee is better than tea'
+  ];
   init_recipes = {
     'recipes': [
       {
@@ -68,7 +53,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
-        'intervals': [9, 5, 5, 5]
+        'intervals': [5, 4, 3, 2]
       },
       {
         'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
@@ -84,7 +69,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'name': 'Brazil Catuai',
         'variant': 'Dark',
         'description': 'also yummy',
-        'starttemp': 220,
+        'starttemp': 190,
         'maintemp': 235,
         'intervals': [250, 180, 180, 180]
       },
@@ -104,6 +89,15 @@ export class HomePage implements OnInit, AfterViewInit {
     pagination: false
   };
   current_roast_phase: number;
+  total_roast_phases: number;
+  initial_display: boolean = true;
+  roasting_display: boolean = false;
+  done_display: boolean = false;
+  display_time: number = 0;
+  recipes: any[] = [];
+  current_recipe;
+  tick_timer = interval(3000);
+
 
   constructor (
     private insomnia: Insomnia,
@@ -119,6 +113,7 @@ export class HomePage implements OnInit, AfterViewInit {
     ) {
     this.insomnia.keepAwake();
     this.nativeAudio.preloadSimple('ding', 'assets/Bell-sound-effect-ding.mp3');
+    this.nativeAudio.preloadSimple('tick', 'assets/Tick.mp3');
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     this.backButtonEvent();
   }
@@ -155,24 +150,31 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   setRecipe($event) {
-    this.showcontent = true;
     const id = $event.target.value;
+    this.roasting_display = false;
+    this.done_display = false;
     console.log(id);
     // this.current_recipe =  this.recipes['recipes'][id]['intervals'];
     this.current_recipe = this.recipes.filter(obj => {
       return obj.id === id;
     });
+    this.total_roast_phases = Object.keys(this.current_recipe[0].intervals).length;
     console.log(this.current_recipe);
+    this.overtime_button = true;
     this.startAlert();
   }
 
   async startAlert() {
+    this.current_roast_phase++;
+    this.initial_display = false;
+    this.roasting_display = true;
     this.current_roast_phase = 0;
     const temp = this.current_recipe[0].starttemp;
     const temp_unit = 'C';
+    const roasts: string = Object.values(this.current_recipe[0].intervals).join(', ');
     const alert = await this.alertController.create({
-      header: 'Roasting, Phase 1',
-      message: 'Important: Before you start preheat the oven to ' + temp + ' °' + temp_unit,
+      header: this.current_recipe[0].name + ': ' + this.current_recipe[0].variant,
+      message: this.total_roast_phases + ' roastings (' + roasts + ') starting at ' + temp + ' °' + temp_unit,
       buttons: [{
         text: 'Cancel',
         role: 'cancel',
@@ -211,17 +213,20 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   async roastPauseAlert() {
-    this.current_roast_phase++;
-    const next_roast_phase: number = this.current_roast_phase + 1;
+    const tick_subscribe = this.tick_timer.subscribe(x => {
+      this.nativeAudio.play('tick');
+    });
+    const next_roast_phase: number = this.current_roast_phase;
     const time = this.current_recipe[0].intervals[next_roast_phase];
     console.log(time);
     const temp_unit = 'C';
     const alert = await this.alertController.create({
       header: 'Quick pause',
-      message: 'Ready for phase  ' + next_roast_phase + '?',
+      message: 'Ready for phase  ' + (next_roast_phase + 1) + '?',
       buttons: [{
         text: 'Let\'s go',
         handler: () => {
+          tick_subscribe.unsubscribe();
           this.startTimer(time);
           console.log('Confirm Okay');
         }
@@ -231,25 +236,30 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   startTimer(duration: number) {
-    this.clickable = true;
-    this.timer = setInterval(() => {
-      if (this.elapsed === duration) {
-        clearInterval(this.timer);
-        this.vibration.vibrate(200);
-        // this.nativeAudio.play('ding');
-        this.audio.play('tabSwitch');
-        this.time_remain = 0;
-        this.clickable = false;
-        if (this.current_roast_phase !== this.current_recipe[0].intervals.lenght) {
+    this.current_roast_phase++;
+    this.display_time = duration;
+    const numbers = interval(1000);
+    const subscribe = numbers.subscribe(x => {
+      duration--;
+      this.display_time = duration;
+      if (duration === 0) {
+        if (this.current_roast_phase === this.total_roast_phases) {
+          this.done_display = true;
+          this.roasting_display = false;
+          this.overtime_button = false;
+          this.vibration.vibrate(200);
+          this.nativeAudio.play('ding');
+        } else {
+          this.vibration.vibrate(200);
+          this.nativeAudio.play('ding');
           this.roastPauseAlert();
         }
+
       }
-      this.percent1 = this.elapsed / duration;
-      this.elapsed++;
-      this.time_remain = duration - this.elapsed;
-    }, 1000);
-    console.log(this.current_roast_phase);
+    });
+    setTimeout(() => subscribe.unsubscribe(), duration * 1000);
   }
+
 
   backButtonEvent() {
     this.platform.backButton.subscribe(async () => {
@@ -259,114 +269,33 @@ export class HomePage implements OnInit, AfterViewInit {
         'center')
         .subscribe(toast => {
             // console.log(JSON.stringify(toast));
+            // navigator[‘app’].exitApp()
         });
       });
-    }
-/*
-  startTimer1 (duration: number) {
-    this.start_p1 = true;
-    this.m = Math.floor(duration / 60);
-    this.s = duration - this.m * 60;
-    this.timer = false;
-    this.percent1 = 0;
-    this.disable_click_p1 = true;
-    this.p1 = 'Beans are now roasting';
+      const confirm$ = fromEvent(document.getElementById('reset'), 'click');
+      this.reset_id = 'reset';
+      const timer$ = timer(4000);
 
-    this.timer = setInterval(() => {
-      if (this.elapsed === duration) {
-        clearInterval(this.timer);
-        this.p1 = 'Done';
-        this.elapsed = 0;
-        this.p1_done = true;
-        this.hide_p1 = true;
-        this.disable_click_p2 = false;
-        this.vibration.vibrate(200);
-        // this.nativeAudio.play('ding');
-        this.audio.play('tabSwitch');
+      confirm$
+        .pipe(
+          takeUntil(timer$)
+        )
+        .subscribe(() => {
+          console.log('ready to delete');
+          this.color = 'primary';
+          this.stop_timer = true;
+          // navigator[‘app’].exitApp();
+        });
+
+      timer$
+        .subscribe(() => {
+          this.reset_id = 'inactive';
+          console.log('timer up');
+          this.color = 'primary';
+        });
       }
-      if (this.stop_timer === true) { // not working
-        console.log('stop');
-        clearInterval(this.timer);
-        this.elapsed = 0;
-        this.stop_timer = false;
-      }
-      this.m = Math.floor((duration - this.elapsed) / 60);
-      this.s = (duration - this.elapsed) - this.m * 60;
-      this.percent1 = this.elapsed / duration;
-      this.elapsed++;
 
-    }, 1000);
-  }
 
-  startTimer2 (duration: number) {
-    this.timer = false;
-    this.percent2 = 0;
-    this.disable_click_p2 = true;
-    this.p2 = 'Still roasting';
-
-    this.timer = setInterval(() => {
-      if (this.elapsed === duration) {
-        clearInterval(this.timer);
-        this.p2 = 'Done';
-        this.elapsed = 0;
-        this.p2_done = true;
-        this.hide_p2 = true;
-        this.disable_click_p3 = false;
-        this.vibration.vibrate(200);
-        // this.nativeAudio.play('ding');
-        this.audio.play('tabSwitch');
-      }
-      this.percent2 = this.elapsed / duration;
-      this.elapsed++;
-    }, 1000);
-  }
-
-  startTimer3 (duration: number) {
-    this.timer = false;
-    this.percent3 = 0;
-    this.disable_click_p3 = true;
-    this.p3 = 'Almost there';
-
-    this.timer = setInterval(() => {
-      if (this.elapsed === duration) {
-        clearInterval(this.timer);
-        this.p3 = 'Done';
-        this.elapsed = 0;
-        this.p3_done = true;
-        this.hide_p3 = true;
-        this.disable_click_p4 = false;
-        this.vibration.vibrate(200);
-        // this.nativeAudio.play('ding');
-        this.audio.play('tabSwitch');
-      }
-      this.percent3 = this.elapsed / duration;
-      this.elapsed++;
-    }, 1000);
-  }
-
-  startTimer4 (duration: number) {
-    this.timer = false;
-    this.percent4 = 0;
-    this.disable_click_p4 = true;
-    this.p4 = 'Home stretch!';
-
-    this.timer = setInterval(() => {
-      if (this.elapsed === duration) {
-        clearInterval(this.timer);
-        this.p4 = 'Done';
-        this.elapsed = 0;
-        this.p4_done = true;
-        this.hide_p4 = true;
-        this.overtime_button = false;
-        this.vibration.vibrate(200);
-        // this.nativeAudio.play('ding');
-        this.audio.play('tabSwitch');
-      }
-      this.percent4 = this.elapsed / duration;
-      this.elapsed++;
-    }, 1000);
-  }
-*/
   addTime(time: number) {
     this.overtime = false;
     this.overtime_button = true;
@@ -388,6 +317,17 @@ export class HomePage implements OnInit, AfterViewInit {
     }, 1000);
   }
 
+  minutesSeconds(seconds: number) {
+    this.m = Math.floor(seconds / 60);
+    this.s = seconds - this.m * 60;
+    let sec = String(this.s);
+    if (sec.length === 1) {
+      sec = '0' + sec;
+    }
+    const ms = String(this. m) + ':' + sec;
+    return ms;
+  }
+/*
   resetTimer() {
     this.color = 'danger';
     this.toast.show(
@@ -426,25 +366,9 @@ export class HomePage implements OnInit, AfterViewInit {
     this.percent2 = 0;
     this.percent3 = 0;
     this.percent4 = 0;
-    this.hide_p1 = false;
-    this.hide_p2 = false;
-    this.hide_p3 = false;
-    this.hide_p4 = false;
-    this.disable_click_p1 = false;
-    this.disable_click_p2 = true;
-    this.disable_click_p3 = true;
-    this.disable_click_p4 = true;
     this.seconds = 0;
-    this.p1 = 'Tap to start';
-    this.p2 = 'Disabled';
-    this.p3 = 'Disabled';
-    this.p4 = 'Disabled';
-    this.p1_done = false;
-    this.p2_done = false;
-    this.p3_done = false;
-    this.p4_done = false;
     this.timer = false;
     this.elapsed = 0;
   }
-
+*/
 }
