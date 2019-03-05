@@ -47,9 +47,10 @@ export class HomePage implements OnInit, AfterViewInit {
   init_recipes = {
     'recipes': [
       {
-        'id': '14900c38-53d1-4665-bc8c-3d61008ec744',
+        'id': '14900c38-53d1-4665-bc8c-3d61008ec711',
         'name': 'Brazil Santos',
         'variant': 'Test',
+        'size': 100,
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -59,6 +60,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
         'name': 'Brazil Santos',
         'variant': 'Medium',
+        'size': 100,
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -68,6 +70,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': 'e758896c-32ff-440f-a79a-6f642afcb245',
         'name': 'Brazil Catuai',
         'variant': 'Dark',
+        'size': 100,
         'description': 'also yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -77,6 +80,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': 'b55390a1-1fa6-426a-bad9-8319a241f26f',
         'name': 'Brazil Catuai',
         'variant': 'Medium',
+        'size': 100,
         'description': 'also yummy',
         'starttemp': 190,
         'maintemp': 235,
