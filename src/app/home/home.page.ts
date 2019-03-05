@@ -8,7 +8,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { fromEvent, timer, interval } from 'rxjs';
 import { takeUntil, map, subscribeOn } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
-import { AudioService } from './shared/audio.service';
+import { AudioService } from '../shared/audio.service';
 import { AppService } from '../app.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 

@@ -3,8 +3,10 @@ export interface Recipe {
 }
 
 export interface IndividualRecipe {
+  id: string;
   name: string;
   variant: string;
+  size: number;
   description: string;
   starttemp: number;
   maintemp: number;
