@@ -1,4 +1,4 @@
-export interface Temperature {
+export interface Units {
     temperature: string;
     weight: string;
 }

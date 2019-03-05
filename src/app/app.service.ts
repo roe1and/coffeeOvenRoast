@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Recipe } from './shared/recipes';
-import { Temperature } from './shared/config.types';
+import { Units } from './shared/config.types';
 
 @Injectable()
 export class AppService {
