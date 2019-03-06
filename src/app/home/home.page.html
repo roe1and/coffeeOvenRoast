@@ -27,6 +27,7 @@
     <ion-col>
       <div *ngIf="initial_display">
         <p>Select a recipe to begin</p>
+        <p>{{ units$ | async | json }}</p>
       </div>
       <div *ngIf="roasting_display">
         <p>{{ display_time | minuteSeconds }}</p>
