@@ -51,7 +51,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': '14900c38-53d1-4665-bc8c-3d61008ec711',
         'name': 'Brazil Santos',
         'variant': 'Test',
-        'size': 100,
+        'size': 75,
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -61,7 +61,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': '14900c38-53d1-4665-bc8c-3d61008eb744',
         'name': 'Brazil Santos',
         'variant': 'Medium',
-        'size': 100,
+        'size': 75,
         'description': 'yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -71,7 +71,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': 'e758896c-32ff-440f-a79a-6f642afcb245',
         'name': 'Brazil Catuai',
         'variant': 'Dark',
-        'size': 100,
+        'size': 75,
         'description': 'also yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -81,7 +81,7 @@ export class HomePage implements OnInit, AfterViewInit {
         'id': 'b55390a1-1fa6-426a-bad9-8319a241f26f',
         'name': 'Brazil Catuai',
         'variant': 'Medium',
-        'size': 100,
+        'size': 75,
         'description': 'also yummy',
         'starttemp': 190,
         'maintemp': 235,
@@ -176,11 +176,13 @@ export class HomePage implements OnInit, AfterViewInit {
     this.roasting_display = true;
     this.current_roast_phase = 0;
     const temp = this.current_recipe[0].starttemp;
-    const temp_unit = 'C';
+    const weight = this.current_recipe[0].size;
+    const temp_unit = (this.units$['temperature'] === 'celsius') ? 'F' : 'C';
+    const weight_unit = (this.units$['weight'] === 'grams') ? 'oz' : 'gr';
     const roasts: string = Object.values(this.current_recipe[0].intervals).join(', ');
     const alert = await this.alertController.create({
       header: this.current_recipe[0].name + ': ' + this.current_recipe[0].variant,
-      message: this.total_roast_phases + ' roastings (' + roasts + ') starting at ' + temp + ' °' + temp_unit,
+      message: weight + weight_unit + '. ' + this.total_roast_phases + ' roastings (' + roasts + ') starting at ' + temp + ' °' + temp_unit,
       buttons: [{
         text: 'Cancel',
         role: 'cancel',
@@ -203,7 +205,8 @@ export class HomePage implements OnInit, AfterViewInit {
   async startOvenTempAlert() {
     const time = this.current_recipe[0].intervals[0];
     const temp = this.current_recipe[0].maintemp;
-    const temp_unit = 'C';
+    const temp_unit = (this.units$['temperature'] === 'celsius') ? 'F' : 'C';
+    console.log(temp_unit);
     const alert = await this.alertController.create({
       header: 'Set oven temperature',
       message: 'Set the oven temperature to ' + temp + ' °' + temp_unit,
@@ -225,7 +228,6 @@ export class HomePage implements OnInit, AfterViewInit {
     const next_roast_phase: number = this.current_roast_phase;
     const time = this.current_recipe[0].intervals[next_roast_phase];
     console.log(time);
-    const temp_unit = 'C';
     const alert = await this.alertController.create({
       header: 'Quick pause',
       message: 'Ready for phase  ' + (next_roast_phase + 1) + '?',
