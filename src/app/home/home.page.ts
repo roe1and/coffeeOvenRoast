@@ -12,6 +12,7 @@ import { AudioService } from '../shared/audio.service';
 import { AppService } from '../app.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UnitService } from '../shared/unit.service';
+import { RecipeService } from '../shared/recipe.service';
 
 @Component({
   selector: 'app-home',
@@ -102,7 +103,8 @@ export class HomePage implements OnInit, AfterViewInit {
   recipes: any[] = [];
   current_recipe;
   tick_timer = interval(3000);
-  units$ = this.stateService.data$;
+  units$ = this.unitService.data$;
+  recipes$ = this.recipeService.data$;
 
   constructor (
     private insomnia: Insomnia,
@@ -112,7 +114,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private toast: Toast,
     private platform: Platform,
     private appService: AppService,
-    private stateService: UnitService,
+    private unitService: UnitService,
+    private recipeService: RecipeService,
     private nativeStorage: NativeStorage,
     private audio: AudioService,
     public alertController: AlertController,

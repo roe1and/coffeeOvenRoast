@@ -16,6 +16,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { UnitService } from './shared/unit.service';
+import { RecipeService } from './shared/recipe.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { UnitService } from './shared/unit.service';
     ScreenOrientation,
     Toast,
     UnitService,
+    RecipeService,
   ],
   bootstrap: [AppComponent]
 })

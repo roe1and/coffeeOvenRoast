@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UnitService } from './shared/unit.service';
+import { RecipeService } from './shared/recipe.service';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,11 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private nativeStorage: NativeStorage,
-    private stateService: UnitService,
+    private unitService: UnitService,
+    private recipeService: RecipeService,
     ) {
-      this.stateService.loadUnits();
+      this.unitService.loadUnits();
+      this.recipeService.loadRecipes();
      }
 
   ngOnInit() {
