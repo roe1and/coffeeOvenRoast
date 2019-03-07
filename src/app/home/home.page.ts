@@ -178,11 +178,15 @@ export class HomePage implements OnInit, AfterViewInit {
     this.initial_display = false;
     this.roasting_display = true;
     this.current_roast_phase = 0;
+    const timings = Object.values(this.current_recipe[0].intervals).map(x => {
+      const string_time = JSON.stringify(x);
+      return this.minutesSeconds(parseInt(string_time, 0));
+    });
     const temp = this.current_recipe[0].starttemp;
     const weight = this.current_recipe[0].size;
     const temp_unit = (this.units$['temperature'] === 'celsius') ? 'F' : 'C';
     const weight_unit = (this.units$['weight'] === 'grams') ? 'oz' : 'gr';
-    const roasts: string = Object.values(this.current_recipe[0].intervals).join(', ');
+    const roasts: string = timings.join(', ');
     const alert = await this.alertController.create({
       header: this.current_recipe[0].name + ': ' + this.current_recipe[0].variant,
       message: weight + weight_unit + '. ' + this.total_roast_phases + ' roastings (' + roasts + ') starting at ' + temp + ' °' + temp_unit,
