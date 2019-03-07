@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { MinuteSecondsPipe } from '../shared/ms.pipe';
-import { StateService } from '../shared/state.service';
+import { UnitService } from '../shared/unit.service';
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { StateService } from '../shared/state.service';
     MinuteSecondsPipe
   ],
   providers: [
-    StateService
+    UnitService
   ]
 })
 export class HomePageModule {}

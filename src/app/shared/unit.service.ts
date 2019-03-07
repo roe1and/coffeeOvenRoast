@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Recipe } from '../shared/recipes';
-import { Units } from '../shared/config.types';
+import { Recipe } from './recipes.types';
+import { Units } from './config.types';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 const init_data = {temperature: 'celsius', weight: 'grams'};
 
 @Injectable()
-export class StateService {
+export class UnitService {
   private stateUnit = new BehaviorSubject<Units>(init_data);
   data$: Observable<any> = this.stateUnit.asObservable();
 

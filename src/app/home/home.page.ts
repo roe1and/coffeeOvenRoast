@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 import { AudioService } from '../shared/audio.service';
 import { AppService } from '../app.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { StateService } from '../shared/state.service';
+import { UnitService } from '../shared/unit.service';
 
 @Component({
   selector: 'app-home',
@@ -112,7 +112,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private toast: Toast,
     private platform: Platform,
     private appService: AppService,
-    private stateService: StateService,
+    private stateService: UnitService,
     private nativeStorage: NativeStorage,
     private audio: AudioService,
     public alertController: AlertController,

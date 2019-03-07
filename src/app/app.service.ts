@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { Recipe } from './shared/recipes';
+import { Recipe } from './shared/recipes.types';
 import { Units } from './shared/config.types';
 
 @Injectable()
